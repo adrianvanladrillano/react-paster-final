@@ -1,0 +1,61 @@
+* {
+    /* font-family: 'Poppins', sans-serif; */
+    /* color: #2c3550 !important; */
+    font-family: 'Segoe UI', sans-serif !important;
+}
+
+html {
+    margin: 0;
+    font-size: 14px;
+    /* color: #3c4043 !important; */
+    color: #1a2027 !important;
+}
+
+.fw-medium {
+    font-weight: 500;
+}
+
+.text-custom {
+    color: #2c3550
+}
+
+.text-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.text-muted {
+    opacity: .7;
+}
+
+.fw-regular {
+    font-weight: 400 !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.text-small {
+    font-size: 0.75rem;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}

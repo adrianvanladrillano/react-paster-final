@@ -19,18 +19,26 @@ io.on("connection", (socket) => {
   socket.on("join", ({ name, room }, callBack) => {
     const { user, error } = addUser({ id: socket.id, name, room });
     if (error) return callBack(error);
-
     socket.join(user.room);
     socket.emit("message", {
       user: "Admin",
-      text: `Welocome to ${user.room}`,
+      text: `Welcome to ${user.room}`,
     });
 
+    // When someone logged in
     socket.broadcast
       .to(user.room)
       .emit("message", { user: "Admin", text: `${user.name} has joined!` });
     callBack(null);
 
+
+    socket.on("sendContent", ({ content }) => {
+      console.log(content)
+      io.to(user.room).emit("content", {
+        user: user.name,
+        text: content,
+      });
+    });
     socket.on("sendMessage", ({ message }) => {
       io.to(user.room).emit("message", {
         user: user.name,
