@@ -1,14 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
+import { Box, Drawer, CssBaseline, Toolbar, AppBar, List, Typography, Divider, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -20,11 +12,17 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Navbar from "./Navbar"
+
 import Title from "./Title"
 import Person from "./Person"
+import Message from "./Message"
+
 import { blue, green } from '@mui/material/colors';
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Sidebar({ position, isLeft }) {
+    const data = useSelector((state) => state.common.data);
+    console.log("data:", data)
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
 
@@ -56,6 +54,7 @@ export default function Sidebar({ position, isLeft }) {
             >
                 {
                     isLeft ? <>
+                        {JSON.stringify(data)}
                         <Toolbar>
                             <Title isSidebar title="Chat room" />
                         </Toolbar>
@@ -72,40 +71,26 @@ export default function Sidebar({ position, isLeft }) {
                                 ))
                             }
                         </Box>
-                    </> : <Box>
-                        <Toolbar>
-                            <Title isSidebar title="Chat room" />
-                        </Toolbar>
-                        <Divider></Divider>
-                        <Box sx={{ p: 2 }}>
-                            <List className="d-flex" sx={{ flexDirection: "column" }}>
-                                {[1, 2, 3, 4, 5].map((val, index) => {
-                                    return (
-                                        <Box>
-                                            <Box className="d-flex" key={index} sx={index % 2 ? { mb: 2, float: "right", flexDirection: "row-reverse", } : { float: "left", mb: 2, }}>
-                                                <Avatar variant="rounded" sx={{ width: 28, height: 28, mr: 1.5, bgcolor: blue[700] }}
-                                                >
-                                                    <span className="text-small">AV</span>
-                                                </Avatar>
-                                                <Box>
-                                                    <p className="p-0 m-0 fw-medium">
-                                                        Adrian Van Ladrillano
-                                                        {/* <span className="m-auto text-muted text-small">
-                                                            10:07AM
-                                                        </span> */}
-                                                    </p>
-
-                                                    <Box sx={{ maxWidth: "300px", borderRadius: "10px", border: "1px solid #e1e1e1", p: 2, mt: 1 }} style={index % 2 ? { background: "#1976D2", color: "white" } : { background: "white" }} >
-                                                        <p className="p-0 m-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur </p>
-                                                    </Box>
-                                                </Box>
-                                            </Box>
-                                        </Box>
-                                    );
-                                })}
-                            </List>
+                    </> : <>
+                        <Box>
+                            <Toolbar>
+                                <Title isSidebar title="Chat room" />
+                            </Toolbar>
+                            <Divider></Divider>
+                            <Box sx={{ p: 2 }}>
+                                <List className="d-flex" sx={{ flexDirection: "column" }}>
+                                    {
+                                        data.map(({ text, user }, index) => {
+                                            return (
+                                                <Message index={index} user={user} text={text} />
+                                            );
+                                        })
+                                    }
+                                </List>
+                            </Box>
                         </Box>
-                    </Box>
+                    </>
+
                 }
 
             </Drawer>

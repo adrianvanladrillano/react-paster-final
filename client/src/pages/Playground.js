@@ -1,31 +1,34 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
+
 import {
-    AvatarGroup,
-    Avatar
+    Box, Drawer, AppBar, Toolbar, List, Typography, CssBaseline, AvatarGroup,
+    Avatar, Divider, ListItem, ListItemIcon, ListItemText
 } from '@mui/material';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+
+import { InboxIcon, MailIcon } from '@mui/icons-material';
+
 import TinyMce from "../components/TinyMce"
 
-
-
 import Title from "../components/Title"
-
 import Sidebar from "../components/Sidebar"
-
+import { webhook } from "../redux/common"
+import { useSelector, useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 export default function Playground() {
+    const dispatch = useDispatch();
+    const [searchParams] = useSearchParams();
+
+    let name
+    let room
+    React.useEffect(() => {
+        name = searchParams.get("name")
+        room = searchParams.get("room")
+        dispatch(webhook(name, room))
+    }, [searchParams]);
+    // let { value } = useSelector(({ common }))
+    // console.log(data)
+
     const handleChange = () => {
         console.log("wew")
     }
@@ -33,10 +36,7 @@ export default function Playground() {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <Sidebar position="left" isLeft={true} />
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, bgcolor: 'background.default' }}
-            >
+            <Box sx={{ flexGrow: 1 }}>
                 <Toolbar>
                     <Title title="Design Group"></Title>
                     <Box className="text-muted text-small" sx={{ ml: "auto" }}>Session ID: <span>
@@ -44,11 +44,9 @@ export default function Playground() {
                 </Toolbar>
                 <Divider />
 
-                {/* Content */}
                 <Box sx={{ p: 4, height: "80vh" }} style={{ background: "#F8FAFB" }}>
                     <TinyMce handleChange={handleChange} />
                 </Box>
-                {/*  */}
             </Box>
             <Sidebar position="right" />
         </Box>

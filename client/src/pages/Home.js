@@ -24,7 +24,7 @@ const Home = () => {
       setToast(payload)
     }
     if (evt === "CREATE") {
-      window.location.href = `/chat?name=Admin&room=${uuid}`
+      window.location.href = `/Playground?name=Admin&room=${uuid}`
       // navigate(`/chat?name=Admin&room=${uuid}`)
     }
   }
